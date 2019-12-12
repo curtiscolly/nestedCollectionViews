@@ -144,6 +144,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
         // Pages Collection View
         let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PageCell", for: indexPath) as! PageCell
+        pageCell.pageNumber = indexPath.item
         pageCell.backgroundColor = .red
         return pageCell
 

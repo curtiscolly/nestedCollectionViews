@@ -14,6 +14,7 @@ import UIKit
 class PageCell: UICollectionViewCell {
     static let reuseIdentifier = "PageCell"
     var dataArray = [[String]]()
+    var pageNumber: Int?
 
     let coreView = UIView()
     private let layout = UICollectionViewFlowLayout()
@@ -27,11 +28,11 @@ class PageCell: UICollectionViewCell {
         
     }
     
-    
+    // This is like viewDidLoad
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        // This is like viewDidLoad
+
     }
     
     func setupView() {
@@ -82,7 +83,7 @@ class PageCell: UICollectionViewCell {
     
     func setupData() {
         let dataA = ["Rock", "Classical", "Hip Hop"]
-        let dataB = ["Rap", "Rhythm and Blues", "Jazz"]
+        let dataB = ["Rap", "Techno", "Jazz"]
         let dataC = ["Instrumental", "Alternative", "Electronic"]
 
         // then add them all to the "data" array
@@ -101,14 +102,18 @@ extension PageCell: UICollectionViewDataSource, UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = videosCollectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as! VideoCell
-        cell.backgroundColor = .systemGreen
-        cell.label.text = dataArray[0][indexPath.row]
+        guard let cell = videosCollectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as? VideoCell else { fatalError("Cannot dequeue VideoCell.") }
+        
+        if let pageNumber = pageNumber {
+            cell.backgroundColor = .systemGreen
+            cell.label.text = dataArray[pageNumber][indexPath.item]
+            
+        }
+        
         return cell
     }
 
 }
-
 
 extension PageCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
