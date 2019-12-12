@@ -66,12 +66,12 @@
 				131629F02389D9F60069D970 /* AppDelegate.swift */,
 				131629F22389D9F60069D970 /* SceneDelegate.swift */,
 				131629F42389D9F60069D970 /* ViewController.swift */,
-				13C1C278239C8F7700A8ACB3 /* VideosCollectionView.swift */,
 				13E0373C239C44DF0083C6C0 /* PageCell.swift */,
 				13C1C27C239DF22000A8ACB3 /* TitleCell.swift */,
 				13C1C27A239CB2EA00A8ACB3 /* VideoCell.swift */,
 				131629FB2389D9F60069D970 /* LaunchScreen.storyboard */,
 				131629FE2389D9F60069D970 /* Info.plist */,
+				13C1C278239C8F7700A8ACB3 /* VideosCollectionView.swift */,
 			);
 			path = UIScrollViewWithUIPageControl;
 			sourceTree = "<group>";

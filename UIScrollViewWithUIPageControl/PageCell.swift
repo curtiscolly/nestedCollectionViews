@@ -5,13 +5,16 @@
 //  Created by Curtis Colly on 12/7/19.
 //  Copyright © 2019 Snaap. All rights reserved.
 //
+// ["Rock", "Classical", "Hip hop", "Rap", "Rhythym and Blues",
+// "Jazz", "Instrumental", "Alternative", "Electronic"]
 
 import UIKit
 
 
 class PageCell: UICollectionViewCell {
     static let reuseIdentifier = "PageCell"
-    
+    var dataArray = [[String]]()
+
     let coreView = UIView()
     private let layout = UICollectionViewFlowLayout()
     
@@ -21,11 +24,14 @@ class PageCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
+        
     }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        // This is like viewDidLoad
     }
     
     func setupView() {
@@ -34,11 +40,7 @@ class PageCell: UICollectionViewCell {
         prepareForAutoLayout()
         setupContraints()
         setupCollectionView()
-    }
-    
-    func setupColors() {
-        coreView.backgroundColor = .red
-        videosCollectionView.backgroundColor = .orange
+        setupData()
     }
     
     func createViewHierarchy() {
@@ -46,6 +48,10 @@ class PageCell: UICollectionViewCell {
         coreView.addSubview(videosCollectionView)
     }
     
+    func setupColors() {
+        coreView.backgroundColor = .red
+        videosCollectionView.backgroundColor = .systemOrange
+    }
 
     func prepareForAutoLayout() {
         for eachView in [coreView, videosCollectionView] {
@@ -73,17 +79,43 @@ class PageCell: UICollectionViewCell {
         videosCollectionView.delegate = self
         videosCollectionView.dataSource = self
     }
+    
+    func setupData() {
+        let dataA = ["Rock", "Classical", "Hip Hop"]
+        let dataB = ["Rap", "Rhythm and Blues", "Jazz"]
+        let dataC = ["Instrumental", "Alternative", "Electronic"]
+
+        // then add them all to the "data" array
+        dataArray.append(dataA)
+        dataArray.append(dataB)
+        dataArray.append(dataC)
+        
+    }
 }
 
 extension PageCell: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
-    }
     
+    // These Methods are for the videos collection view
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = videosCollectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath)
-        cell.backgroundColor = .green
+        let cell = videosCollectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as! VideoCell
+        cell.backgroundColor = .systemGreen
+        cell.label.text = dataArray[0][indexPath.row]
         return cell
     }
-    
+
+}
+
+
+extension PageCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+      
+        return CGSize(width: 100, height: 100)
+        
+    }
+
 }

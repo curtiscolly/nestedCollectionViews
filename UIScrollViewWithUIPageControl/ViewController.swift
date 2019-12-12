@@ -17,8 +17,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     var titlesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var pagesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
-    var buttons: [UIButton] = []
-    var names = ["Boston Common", "Bunker Hill", "Tea Party Museum", "Something Else"]
+    var names = ["California", "Connecticut", "Michigan", "Massachusetts", "Louisiana"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +66,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func prepareForAutoLayout() {
-        for eachView in [coreView, topView, mainView, bottomView, titlesCollectionView, pagesCollectionView ] {
+        for eachView in [coreView, topView, mainView, bottomView, titlesCollectionView, pagesCollectionView] {
             eachView.translatesAutoresizingMaskIntoConstraints = false
         }
     }
@@ -109,20 +108,9 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-       // setupButtons()
+        setupView()
         
     }
-    
-    @objc func buttonWasPressed(_ sender: UIButton) {
-        for button in buttons {
-            if sender.tag == button.tag {
-                button.isSelected = true
-            } else {
-                button.isSelected = false
-            }
-        }
-    }
-    
     
     func setupCollectionViews() {
         titlesCollectionView.register(TitleCell.self, forCellWithReuseIdentifier: TitleCell.reuseIdentifier)
@@ -140,13 +128,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        if collectionView == titlesCollectionView {
-            return names.count
-        }
-
-        // PagesCollectionView
-        return 10
+        return names.count
+      
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -171,10 +154,16 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         if collectionView == titlesCollectionView {
             return 10
         }
-
+        
         // Pages Collection View
         return 0
 
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == pagesCollectionView {
+            
+        }
     }
 
 }
@@ -183,11 +172,12 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         if collectionView == titlesCollectionView {
-            return CGSize(width: 10 * names[indexPath.item].count, height: 50)
+            return CGSize(width: 12 * names[indexPath.item].count, height: 50)
         }
 
         // Pages Collection View
         return CGSize(width: mainView.frame.width, height: mainView.frame.height)
+        
     }
 
 }
