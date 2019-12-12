@@ -145,7 +145,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         // Pages Collection View
         let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PageCell", for: indexPath) as! PageCell
         pageCell.pageNumber = indexPath.item
-        pageCell.backgroundColor = .red
         return pageCell
 
     }
@@ -162,9 +161,15 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == pagesCollectionView {
+       
+            titlesCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+            titlesCollectionView.reloadData()
+        
+            pagesCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+            pagesCollectionView.reloadData()
             
-        }
+       
+        
     }
 
 }

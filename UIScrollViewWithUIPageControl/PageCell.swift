@@ -82,14 +82,18 @@ class PageCell: UICollectionViewCell {
     }
     
     func setupData() {
-        let dataA = ["Rock", "Classical", "Hip Hop"]
-        let dataB = ["Rap", "Techno", "Jazz"]
-        let dataC = ["Instrumental", "Alternative", "Electronic"]
+        let data0 = ["Rock", "Classical", "Hip Hop"]
+        let data1 = ["Rap", "Techno", "Jazz"]
+        let data2 = ["Instrumental", "Alternative", "Electronic"]
+        let data3 = ["Orchestra", "Baroque", "Opera"]
+        let data4 = ["Pop", "Singing", "Acapella"]
 
         // then add them all to the "data" array
-        dataArray.append(dataA)
-        dataArray.append(dataB)
-        dataArray.append(dataC)
+        dataArray.append(data0)
+        dataArray.append(data1)
+        dataArray.append(data2)
+        dataArray.append(data3)
+        dataArray.append(data4)
         
     }
 }
@@ -106,6 +110,9 @@ extension PageCell: UICollectionViewDataSource, UICollectionViewDelegate {
         
         if let pageNumber = pageNumber {
             cell.backgroundColor = .systemGreen
+            cell.layer.borderWidth = 2
+            cell.layer.cornerRadius = 10
+            cell.layer.borderColor = UIColor.red.cgColor
             cell.label.text = dataArray[pageNumber][indexPath.item]
             
         }
@@ -118,7 +125,6 @@ extension PageCell: UICollectionViewDataSource, UICollectionViewDelegate {
 extension PageCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-      
         return CGSize(width: 100, height: 100)
         
     }
