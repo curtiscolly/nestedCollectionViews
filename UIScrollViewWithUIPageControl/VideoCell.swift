@@ -57,4 +57,3 @@ class VideoCell: UICollectionViewCell {
     
     
 }
-

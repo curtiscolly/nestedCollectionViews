@@ -18,6 +18,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     var pagesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     var names = ["California", "Connecticut", "Michigan", "Massachusetts", "Louisiana"]
+    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +31,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         titlesCollectionView.collectionViewLayout = titlesLayout
         pagesCollectionView.collectionViewLayout = pagesLayout
-        pagesCollectionView.isPagingEnabled = true
         
+
         setupView()
         
     }
@@ -121,8 +122,14 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         pagesCollectionView.delegate = self
         pagesCollectionView.dataSource = self
+        pagesCollectionView.isPagingEnabled = true
         
     }
+    
+    @objc func swipeLeft() {
+        print("Swiped Left 🏓")
+    }
+    
 }
 
 
@@ -137,7 +144,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         if collectionView == titlesCollectionView {
             let titleCell = titlesCollectionView.dequeueReusableCell(withReuseIdentifier: "TitleCell", for: indexPath) as! TitleCell
             titleCell.backgroundColor = .blue
+            titleCell.layer.borderWidth = 0.0
             titleCell.label.text = names[indexPath.row]
+            
+            titleCell.backgroundColor = selectedIndex == indexPath.row ? UIColor.systemGreen : UIColor.blue
             
             return titleCell
         }
@@ -148,6 +158,38 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         return pageCell
 
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            titlesCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+            pagesCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        
+            selectedIndex = indexPath.row
+
+            titlesCollectionView.reloadData()
+        
+    }
+    
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        //if scrollView.panGestureRecognizer.translation(in: scrollView).x < mainView.frame.width {}
+//
+//
+//
+//    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageWidth = pagesCollectionView.frame.width
+        let page = Int(floor(pagesCollectionView.contentOffset.x / pageWidth))
+        
+        titlesCollectionView.scrollToItem(at: [0, page], at: .left, animated: true)
+        selectedIndex = page
+        titlesCollectionView.reloadData()
+        
+    }
+    
+    
+    
+   
+   
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 
@@ -160,17 +202,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       
-            titlesCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-            titlesCollectionView.reloadData()
-        
-            pagesCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-            pagesCollectionView.reloadData()
-            
-       
-        
-    }
 
 }
 

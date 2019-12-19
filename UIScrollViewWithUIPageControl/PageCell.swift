@@ -22,17 +22,25 @@ class PageCell: UICollectionViewCell {
     // The rect's values will be overriden by the constraint
     lazy var videosCollectionView = VideosCollectionView(frame: .zero, collectionViewLayout: layout)
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
-        
-    }
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+    
+//        setupView()
+//
+//    }
+    
+    
     
     // This is like viewDidLoad
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print("")
         setupView()
 
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setupView() {
@@ -112,7 +120,7 @@ extension PageCell: UICollectionViewDataSource, UICollectionViewDelegate {
             cell.backgroundColor = .systemGreen
             cell.layer.borderWidth = 2
             cell.layer.cornerRadius = 10
-            cell.layer.borderColor = UIColor.red.cgColor
+            cell.layer.borderColor = UIColor.blue.cgColor
             cell.label.text = dataArray[pageNumber][indexPath.item]
             
         }
